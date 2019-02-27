@@ -45,7 +45,7 @@ resource "aws_lb" "ingress_nlb" {
   ]
 
   tags {
-    Name        = "${var.name}-${element(var.ingress_ports, count.index)}"
+    Name        = "${var.name}-ingress"
     Owner       = "${var.owner_tag}"
     Environment = "${var.env_tag}"
   }
@@ -56,7 +56,7 @@ output "ingress_nlb_dns" {
 }
 
 resource "aws_lb_listener" "ingress_listener" {
-  count             = "${length(var.az_list)}"
+  count             = "${length(var.ingress_ports)}"
   load_balancer_arn = "${aws_lb.ingress_nlb.arn}"
   port              = "${element(var.ingress_ports, count.index)}"
   protocol          = "TCP"

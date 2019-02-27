@@ -15,7 +15,7 @@ output "kube_node_sg" {
 }
 
 resource "aws_security_group_rule" "kube_ingress_rules" {
-  count             = "${length(var.az_list)}"
+  count             = "${length(var.ingress_ports)}"
   type              = "ingress"
   from_port         = "${element(var.ingress_ports, count.index)}"
   to_port           = "${element(var.ingress_ports, count.index)}"
