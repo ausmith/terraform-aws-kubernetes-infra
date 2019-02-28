@@ -35,7 +35,7 @@ resource "aws_eip" "natgw_eip" {
 }
 
 resource "aws_nat_gateway" "ha_nat_gw" {
-  count         = "${list(var.az_list)}"
+  count         = "${length(var.az_list)}"
   allocation_id = "${element(aws_eip.natgw_eip.*.id, count.index)}"
   subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
 
