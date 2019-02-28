@@ -52,7 +52,7 @@ resource "aws_lb" "ingress_nlb" {
 }
 
 output "ingress_nlb_dns" {
-  value = "${aws_lb.ingress_nlb.dns_name}"
+  value = "${aws_lb.ingress_nlb.*.dns_name}"
 }
 
 resource "aws_lb_listener" "ingress_listener" {
