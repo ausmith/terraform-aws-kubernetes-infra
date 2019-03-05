@@ -11,7 +11,7 @@ resource "aws_vpc" "default" {
 }
 
 output "vpc_id" {
-  default = "${aws_vpc.default.id}"
+  value = "${aws_vpc.default.id}"
 }
 
 resource "aws_internet_gateway" "gw" {
