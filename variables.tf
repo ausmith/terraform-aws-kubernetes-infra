@@ -47,5 +47,5 @@ variable "control_origins" {
 
 variable "toggle_ingress_nlb" {
   description = "Toggle on/off ingress NLB (uses count) accepts 1 or 0."
-  default = 0
+  default     = 0
 }
