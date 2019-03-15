@@ -10,6 +10,7 @@ resource "aws_subnet" "public" {
     Name        = "Public ${var.name} ${element(var.az_list, count.index)}"
     Owner       = "${var.owner_tag}"
     Environment = "${var.env_tag}"
+    ZoneType    = "public"
   }
 }
 
@@ -36,6 +37,7 @@ resource "aws_subnet" "private" {
     Name        = "Private ${var.name} ${element(var.az_list, count.index)}"
     Owner       = "${var.owner_tag}"
     Environment = "${var.env_tag}"
+    ZoneType    = "private"
   }
 }
 
