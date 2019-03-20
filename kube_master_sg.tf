@@ -159,6 +159,21 @@ resource "aws_security_group_rule" "kube_master_to_localhost_and_kube" {
 }
 */
 
+resource "aws_security_group_rule" "kube_master_https_to_internet" {
+  # Alas, without this we cannot fetch docker containers
+  type        = "egress"
+  from_port   = 443
+  to_port     = 443
+  protocol    = "tcp"
+  description = "HTTPS to the internet"
+
+  cidr_blocks = [
+    "0.0.0.0/0",
+  ]
+
+  security_group_id = "${aws_security_group.kube_master_sg.id}"
+}
+
 resource "aws_security_group_rule" "kube_master_master_kubelet_egress" {
   type                     = "egress"
   from_port                = 10250

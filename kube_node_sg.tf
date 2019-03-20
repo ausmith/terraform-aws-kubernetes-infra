@@ -88,6 +88,21 @@ resource "aws_security_group_rule" "kube_nodes_to_masters_https_egress" {
   description              = "node-master API 443"
 }
 
+resource "aws_security_group_rule" "kube_nodes_https_to_internet" {
+  # Alas, without this we cannot fetch docker containers
+  type        = "egress"
+  from_port   = 443
+  to_port     = 443
+  protocol    = "tcp"
+  description = "HTTPS to the internet"
+
+  cidr_blocks = [
+    "0.0.0.0/0",
+  ]
+
+  security_group_id = "${aws_security_group.kube_node_sg.id}"
+}
+
 resource "aws_security_group_rule" "kube_node_to_master_vxlan_canal_egress" {
   type                     = "egress"
   from_port                = 8472
