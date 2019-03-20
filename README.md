@@ -21,7 +21,41 @@ design decisions.
 
 ## Usage Example
 
-TODO
+```
+module "kubeinfra" {
+  source = "github.com/ausmith/terraform-aws-kubernetes-infra"
+
+  vpc_cidr           = "${var.vpc_cidr}"
+  name               = "prototype"
+  region             = "us-west-2"
+  owner_tag          = "me"
+  env_tag            = "prod"
+  toggle_ingress_nlb = 0
+
+  # This is ugly enumerating out each AZ, templating perhaps?
+  az_list = [
+    "us-west-2a",
+    "us-west-2b",
+  ]
+
+  # Will need to template these CIDRs somehow
+  public_subnet_cidrs = [
+    "172.20.0.0/24",
+    "172.20.1.0/24",
+  ]
+
+  private_subnet_cidrs = [
+    "172.20.10.0/24",
+    "172.20.11.0/24",
+  ]
+
+  ingress_ports = []
+
+  control_origins = [
+    "${var.my_public_ip_cidr}",
+  ]
+}
+```
 
 ## Suggested Additions
 
