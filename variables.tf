@@ -49,3 +49,13 @@ variable "toggle_ingress_nlb" {
   description = "Toggle on/off ingress NLB (uses count) accepts 1 or 0."
   default     = 0
 }
+
+variable "cni_tcp_ports" {
+	description = "List of TCP ports for master-master, master-node, and node-node CNI traffic."
+	default = []
+}
+
+variable "cni_udp_ports" {
+	description = "List of UDP ports for master-master, master-node, and node-node CNI traffic."
+	default = []
+}

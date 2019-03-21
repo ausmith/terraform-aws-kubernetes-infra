@@ -29,24 +29,48 @@ resource "aws_security_group_rule" "kube_ingress_rules" {
   ]
 }
 
-resource "aws_security_group_rule" "kube_node_from_master_vxlan_canal_ingress" {
+resource "aws_security_group_rule" "kube_node_from_master_cni_tcp_ports" {
+	count                    = "${length(var.cni_tcp_ports)}"
   type                     = "ingress"
-  from_port                = 8472
-  to_port                  = 8472
+  from_port                = "${element(var.cni_tcp_ports, count.index)}"
+  to_port                  = "${element(var.cni_tcp_ports, count.index)}"
+  protocol                 = "tcp"
+  source_security_group_id = "${aws_security_group.kube_master_sg.id}"
+  security_group_id        = "${aws_security_group.kube_node_sg.id}"
+  description              = "master-node cni tcp port ${element(var.cni_tcp_ports, count.index)}"
+}
+
+resource "aws_security_group_rule" "kube_node_from_node_cni_tcp_ports" {
+	count                    = "${length(var.cni_tcp_ports)}"
+  type                     = "ingress"
+  from_port                = "${element(var.cni_tcp_ports, count.index)}"
+  to_port                  = "${element(var.cni_tcp_ports, count.index)}"
+  protocol                 = "tcp"
+  source_security_group_id = "${aws_security_group.kube_node_sg.id}"
+  security_group_id        = "${aws_security_group.kube_node_sg.id}"
+  description              = "node-node cni tcp port ${element(var.cni_tcp_ports, count.index)}"
+}
+
+resource "aws_security_group_rule" "kube_node_from_master_cni_udp_ports" {
+	count                    = "${length(var.cni_udp_ports)}"
+  type                     = "ingress"
+  from_port                = "${element(var.cni_udp_ports, count.index)}"
+  to_port                  = "${element(var.cni_udp_ports, count.index)}"
   protocol                 = "udp"
   source_security_group_id = "${aws_security_group.kube_master_sg.id}"
   security_group_id        = "${aws_security_group.kube_node_sg.id}"
-  description              = "master-node vxlan 8472"
+  description              = "master-node cni udp port ${element(var.cni_udp_ports, count.index)}"
 }
 
-resource "aws_security_group_rule" "kube_node_from_node_vxlan_canal_ingress" {
+resource "aws_security_group_rule" "kube_node_from_node_cni_udp_ports" {
+	count                    = "${length(var.cni_udp_ports)}"
   type                     = "ingress"
-  from_port                = 8472
-  to_port                  = 8472
+  from_port                = "${element(var.cni_udp_ports, count.index)}"
+  to_port                  = "${element(var.cni_udp_ports, count.index)}"
   protocol                 = "udp"
   source_security_group_id = "${aws_security_group.kube_node_sg.id}"
   security_group_id        = "${aws_security_group.kube_node_sg.id}"
-  description              = "node-node vxlan 8472"
+  description              = "node-node cni udp port ${element(var.cni_udp_ports, count.index)}"
 }
 
 resource "aws_security_group_rule" "kube_master_node_kubelet_ingress" {
@@ -103,22 +127,46 @@ resource "aws_security_group_rule" "kube_nodes_https_to_internet" {
   security_group_id = "${aws_security_group.kube_node_sg.id}"
 }
 
-resource "aws_security_group_rule" "kube_node_to_master_vxlan_canal_egress" {
+resource "aws_security_group_rule" "kube_node_to_master_cni_tcp_ports" {
+	count                    = "${length(var.cni_tcp_ports)}"
   type                     = "egress"
-  from_port                = 8472
-  to_port                  = 8472
+  from_port                = "${element(var.cni_tcp_ports, count.index)}"
+  to_port                  = "${element(var.cni_tcp_ports, count.index)}"
+  protocol                 = "tcp"
+  source_security_group_id = "${aws_security_group.kube_master_sg.id}"
+  security_group_id        = "${aws_security_group.kube_node_sg.id}"
+  description              = "master-node cni tcp port ${element(var.cni_tcp_ports, count.index)}"
+}
+
+resource "aws_security_group_rule" "kube_node_to_node_cni_tcp_ports" {
+	count                    = "${length(var.cni_tcp_ports)}"
+  type                     = "egress"
+  from_port                = "${element(var.cni_tcp_ports, count.index)}"
+  to_port                  = "${element(var.cni_tcp_ports, count.index)}"
+  protocol                 = "tcp"
+  source_security_group_id = "${aws_security_group.kube_node_sg.id}"
+  security_group_id        = "${aws_security_group.kube_node_sg.id}"
+  description              = "node-node cni tcp port ${element(var.cni_tcp_ports, count.index)}"
+}
+
+resource "aws_security_group_rule" "kube_node_to_master_cni_udp_ports" {
+	count                    = "${length(var.cni_udp_ports)}"
+  type                     = "egress"
+  from_port                = "${element(var.cni_udp_ports, count.index)}"
+  to_port                  = "${element(var.cni_udp_ports, count.index)}"
   protocol                 = "udp"
   source_security_group_id = "${aws_security_group.kube_master_sg.id}"
   security_group_id        = "${aws_security_group.kube_node_sg.id}"
-  description              = "node-master vxlan 8472"
+  description              = "master-node cni udp port ${element(var.cni_udp_ports, count.index)}"
 }
 
-resource "aws_security_group_rule" "kube_node_to_node_vxlan_canal_egress" {
+resource "aws_security_group_rule" "kube_node_to_node_cni_udp_ports" {
+	count                    = "${length(var.cni_udp_ports)}"
   type                     = "egress"
-  from_port                = 8472
-  to_port                  = 8472
+  from_port                = "${element(var.cni_udp_ports, count.index)}"
+  to_port                  = "${element(var.cni_udp_ports, count.index)}"
   protocol                 = "udp"
   source_security_group_id = "${aws_security_group.kube_node_sg.id}"
   security_group_id        = "${aws_security_group.kube_node_sg.id}"
-  description              = "node-node vxlan 8472"
+  description              = "node-node cni udp port ${element(var.cni_udp_ports, count.index)}"
 }
