@@ -3,11 +3,12 @@ resource "aws_vpc" "default" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
-  tags {
-    Name        = "tf_${var.name}_${var.region}"
-    Owner       = "${var.owner_tag}"
-    Environment = "${var.env_tag}"
-  }
+  tags = "${merge(
+		map("Name", "tf_${var.name}_${var.region}"),
+		map("Owner", "${var.owner_tag}"),
+		map("Environment", "${var.env_tag}"),
+		map("kubernetes.io/cluster/${var.name}", "shared"),
+	)}"
 }
 
 output "vpc_id" {

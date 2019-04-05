@@ -51,11 +51,11 @@ variable "toggle_ingress_nlb" {
 }
 
 variable "cni_tcp_ports" {
-	description = "List of TCP ports for master-master, master-node, and node-node CNI traffic."
-	default = []
+  description = "List of TCP ports for master-master, master-node, and node-node CNI traffic."
+  default     = []
 }
 
 variable "cni_udp_ports" {
-	description = "List of UDP ports for master-master, master-node, and node-node CNI traffic."
-	default = []
+  description = "List of UDP ports for master-master, master-node, and node-node CNI traffic."
+  default     = []
 }

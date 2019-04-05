@@ -79,7 +79,7 @@ resource "aws_security_group_rule" "kube_master_kubelet_ingress" {
 }
 
 resource "aws_security_group_rule" "kube_master_from_master_cni_tcp_ports" {
-	count                    = "${length(var.cni_tcp_ports)}"
+  count                    = "${length(var.cni_tcp_ports)}"
   type                     = "ingress"
   from_port                = "${element(var.cni_tcp_ports, count.index)}"
   to_port                  = "${element(var.cni_tcp_ports, count.index)}"
@@ -90,7 +90,7 @@ resource "aws_security_group_rule" "kube_master_from_master_cni_tcp_ports" {
 }
 
 resource "aws_security_group_rule" "kube_master_from_node_cni_tcp_ports" {
-	count                    = "${length(var.cni_tcp_ports)}"
+  count                    = "${length(var.cni_tcp_ports)}"
   type                     = "ingress"
   from_port                = "${element(var.cni_tcp_ports, count.index)}"
   to_port                  = "${element(var.cni_tcp_ports, count.index)}"
@@ -101,7 +101,7 @@ resource "aws_security_group_rule" "kube_master_from_node_cni_tcp_ports" {
 }
 
 resource "aws_security_group_rule" "kube_master_from_master_cni_udp_ports" {
-	count                    = "${length(var.cni_udp_ports)}"
+  count                    = "${length(var.cni_udp_ports)}"
   type                     = "ingress"
   from_port                = "${element(var.cni_udp_ports, count.index)}"
   to_port                  = "${element(var.cni_udp_ports, count.index)}"
@@ -112,7 +112,7 @@ resource "aws_security_group_rule" "kube_master_from_master_cni_udp_ports" {
 }
 
 resource "aws_security_group_rule" "kube_master_from_node_cni_udp_ports" {
-	count                    = "${length(var.cni_udp_ports)}"
+  count                    = "${length(var.cni_udp_ports)}"
   type                     = "ingress"
   from_port                = "${element(var.cni_udp_ports, count.index)}"
   to_port                  = "${element(var.cni_udp_ports, count.index)}"
@@ -219,7 +219,7 @@ resource "aws_security_group_rule" "kube_master_node_kubelet_egress" {
 }
 
 resource "aws_security_group_rule" "kube_master_to_master_cni_tcp_ports" {
-	count                    = "${length(var.cni_tcp_ports)}"
+  count                    = "${length(var.cni_tcp_ports)}"
   type                     = "egress"
   from_port                = "${element(var.cni_tcp_ports, count.index)}"
   to_port                  = "${element(var.cni_tcp_ports, count.index)}"
@@ -230,7 +230,7 @@ resource "aws_security_group_rule" "kube_master_to_master_cni_tcp_ports" {
 }
 
 resource "aws_security_group_rule" "kube_master_to_node_cni_tcp_ports" {
-	count                    = "${length(var.cni_tcp_ports)}"
+  count                    = "${length(var.cni_tcp_ports)}"
   type                     = "egress"
   from_port                = "${element(var.cni_tcp_ports, count.index)}"
   to_port                  = "${element(var.cni_tcp_ports, count.index)}"
@@ -241,7 +241,7 @@ resource "aws_security_group_rule" "kube_master_to_node_cni_tcp_ports" {
 }
 
 resource "aws_security_group_rule" "kube_master_to_master_cni_udp_ports" {
-	count                    = "${length(var.cni_udp_ports)}"
+  count                    = "${length(var.cni_udp_ports)}"
   type                     = "egress"
   from_port                = "${element(var.cni_udp_ports, count.index)}"
   to_port                  = "${element(var.cni_udp_ports, count.index)}"
@@ -252,7 +252,7 @@ resource "aws_security_group_rule" "kube_master_to_master_cni_udp_ports" {
 }
 
 resource "aws_security_group_rule" "kube_master_to_node_cni_udp_ports" {
-	count                    = "${length(var.cni_udp_ports)}"
+  count                    = "${length(var.cni_udp_ports)}"
   type                     = "egress"
   from_port                = "${element(var.cni_udp_ports, count.index)}"
   to_port                  = "${element(var.cni_udp_ports, count.index)}"

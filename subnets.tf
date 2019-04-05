@@ -33,12 +33,13 @@ resource "aws_subnet" "private" {
   cidr_block        = "${element(var.private_subnet_cidrs, count.index)}"
   availability_zone = "${element(var.az_list, count.index)}"
 
-  tags = {
-    Name        = "Private ${var.name} ${element(var.az_list, count.index)}"
-    Owner       = "${var.owner_tag}"
-    Environment = "${var.env_tag}"
-    ZoneType    = "private"
-  }
+  tags = "${merge(
+		map("Name", "tf_${var.name}_${var.region}"),
+		map("Owner", "${var.owner_tag}"),
+		map("Environment", "${var.env_tag}"),
+		map("ZoneType", "private"),
+		map("kubernetes.io/cluster/${var.name}", "shared"),
+	)}"
 }
 
 resource "aws_route_table_association" "private" {
