@@ -1,5 +1,7 @@
 # terraform-aws-kubernetes-infra
 
+**NOTE: This is expected to be terraform v0.11 compatible only!**
+
 A Terraform module for basic infrastructure in AWS required
 to setup a Kubernetes cluster. This is very opinionated!
 Please consider the resources being created and consider
